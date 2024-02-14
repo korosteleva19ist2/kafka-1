@@ -1,10 +1,16 @@
+package pack;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
-//import Producer;
+import pack.Producer;
 
 @RestController
+//@RequiredArgsConstructor
 public class Controller {
     private static final PetModel petmodel=PetModel.getInstance();
     private static final AtomicInteger newID= new AtomicInteger(1);
@@ -14,12 +20,17 @@ public class Controller {
         this.producer = producer;
     }
 
+//    public Controller(Producer producer) {
+//        this.producer = producer;
+//    }
+
     @PostMapping(value = "/createPet",consumes = "application/json",produces = "text/html")
-    public String createPet(@RequestBody Pet pet) //чтобы Pet pet воспринимали как json надо прописать аннотацию @RequestBody
+    public String createPet(@RequestBody Pet pet) //чтобы pack.Pet pet воспринимали как json надо прописать аннотацию @RequestBody
     {
         petmodel.add(pet, newID.getAndIncrement());
+        String name=pet.getName();
         String pt="Вы создали нового питомца";
-        producer.sendOrder(pet);
+        producer.sendOrder(name);
         return pt;
 
     }
@@ -32,7 +43,7 @@ public class Controller {
 
     //если писать id  в body
     /*@GetMapping(value = "/getPet", consumes = "application/json", produces = "application/json")
-    public Pet getPet(@RequestBody Map<String,Integer> id)
+    public pack.Pet getPet(@RequestBody Map<String,Integer> id)
     {
         return petmodel.petGetFromList(id.get("id"));
 
@@ -42,6 +53,7 @@ public class Controller {
     @GetMapping(value = "/getPet", consumes = "application/json", produces = "application/json")
     public Pet getPet(@RequestParam("id") int id)
     {
+        //ArrayList<String>= (petmodel.petGetFromList(id)).getName();
         return petmodel.petGetFromList(id);
 
     }

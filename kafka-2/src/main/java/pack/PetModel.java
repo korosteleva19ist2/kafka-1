@@ -1,3 +1,5 @@
+package pack;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +24,11 @@ public class PetModel implements Serializable {
     public Pet petGetFromList(int id)
     {
         return model.get(id);
+    }
+    public String petGet(int id)
+    {
+        String name=(model.get(id)).getName();
+        return name;
     }
 
     public Map<Integer,Pet> getAll(){
