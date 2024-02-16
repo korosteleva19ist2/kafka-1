@@ -15,13 +15,6 @@ import java.util.Map;
 
 @Configuration
 public class KafkaProducerConfig {
-//    Properties props = new Properties();
-//  props.put("bootstrap.servers", "https://aware-marten-11494-us1-kafka.upstash.io:9092");
-//  props.put("sasl.mechanism", "SCRAM-SHA-256");
-//  props.put("security.protocol", "SASL_SSL");
-//  props.put("sasl.jaas.config", "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"********\" password=\"********\";");
-//  props.put("key.serializer", "org.apache.kafka.common.serialization.StringSerializer");
-//  props.put("value.serializer", "org.apache.kafka.common.serialization.StringSerializer");
     @Bean
     public ProducerFactory<String, String> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
@@ -37,9 +30,6 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    //public KafkaTemplate<String, Pet> kafkaTemplate() {
-//        return new KafkaTemplate<>(producerFactory());
-//    }
     public KafkaTemplate<String, String> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
